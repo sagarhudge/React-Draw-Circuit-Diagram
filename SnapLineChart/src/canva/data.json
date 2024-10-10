@@ -1,0 +1,31 @@
+[
+    {
+      "type": "wire",
+      "length": 50,
+      "direction": 0
+    },
+   
+    {
+      "type": "capacitor",
+      "length": 80,
+      "direction": 0
+    },
+    {
+      "type": "inductor",
+      "length": 90,
+      "direction": 1
+    },
+    
+      {
+        "type": "wire",
+        "length": 50,
+        "direction": 2
+      },
+      {
+        "type": "resistor",
+        "length": 30,
+        "direction": 2
+      }
+    
+  ]
+  

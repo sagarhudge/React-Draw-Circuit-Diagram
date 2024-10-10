@@ -1,0 +1,68 @@
+{
+    "elements": [
+      {
+        "type": "busbar",
+        "orientation": "horizontal",
+        "x": 50,
+        "y": 100,
+        "length": 250
+      },
+      {
+        "type": "camera",
+        "x": 175,
+        "y": 100
+      },
+      {
+        "type": "busbar",
+        "orientation": "vertical",
+        "x": 300,
+        "y": 100,
+        "length": 200
+      },
+      {
+        "type": "openSwitch",
+        "x": 300,
+        "y": 150
+      },
+      {
+        "type": "ground",
+        "x": 270,
+        "y": 150,
+        "orientation": "left"
+      },
+      {
+        "type": "text",
+        "x": 310,
+        "y": 180,
+        "content": "1200"
+      },
+      {
+        "type": "busbar",
+        "orientation": "vertical",
+        "x": 300,
+        "y": 200,
+        "length": 100
+      },
+      {
+        "type": "busbar",
+        "orientation": "horizontal",
+        "x": 300,
+        "y": 300,
+        "length": 200
+      },
+      {
+        "type": "busbar",
+        "orientation": "horizontal",
+        "x": 300,
+        "y": 300,
+        "length": -150
+      },
+      {
+        "type": "ground",
+        "x": 150,
+        "y": 350,
+        "orientation": "down"
+      }
+    ]
+  }
+  
