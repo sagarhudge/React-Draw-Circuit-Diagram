@@ -12,7 +12,7 @@ const circuitData = {
             id: 1,
             elements: [
                 { type: "busbar", orientation: "horizontal", x: 150, y: 100, length: 60, visible: true },
-                { type: "camera", x: 210, y: 83, length: 35, visible: true }, //left
+                { type: "camera", x: 210, y: 83, length: 35, visible: true },
                 { type: "busbar", orientation: "horizontal", x: 245, y: 100, length: 60, visible: true },
                 { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
                 { type: "ground", x: 240, y: 100, orientation: "left", length: 50, visible: true },
@@ -29,7 +29,7 @@ const circuitData = {
             id: 2,
             elements: [
                 { type: "busbar", orientation: "horizontal", x: 150, y: 100, length: 60, visible: true },
-                { type: "camera", x: 210, y: 83, length: 35, visible: true }, //left
+                { type: "camera", x: 210, y: 83, length: 35, visible: true },
                 { type: "busbar", orientation: "horizontal", x: 245, y: 100, length: 60, visible: true },
                 { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
                 { type: "ground", x: 240, y: 100, orientation: "left", length: 50, visible: true },
@@ -91,7 +91,10 @@ const CircuitDiagramD3 = () => {
                 .attr('x2', orientation === "horizontal" ? x + length + offsetX : x + offsetX)
                 .attr('y2', orientation === "horizontal" ? y : y + length)
                 .attr('stroke', '#000')
-                .attr('stroke-width', 1.5);
+                .attr('stroke-width', 1.5)
+                .on('click', () => handleElementClick({ type: 'busbar', x: x + offsetX, y }));
+
+            line.raise(); // Bring line to front
         };
 
         const drawImage = (imgSrc, { x, y, length, orientation }, offsetX) => {
@@ -100,35 +103,47 @@ const CircuitDiagramD3 = () => {
                 .attr('x', x + offsetX)
                 .attr('y', y)
                 .attr('width', length)
-                .attr('height', length);
+                .attr('height', length)
+                .on('click', () => handleElementClick({ type: imgSrc, x: x + offsetX, y }));
+
             applyRotation(image, x + offsetX, y, length, orientation);
+            image.raise(); // Bring image to front
         };
 
         const drawHalfCurve = ({ x, y, length }, offsetX) => {
             const halfCurvePath = `M${x + offsetX},${y} Q${x + length / 2 + offsetX},${y - length} ${x + length + offsetX},${y}`;
-            svg.append('path')
+            const path = svg.append('path')
                 .attr('d', halfCurvePath)
                 .attr('stroke', '#000')
                 .attr('stroke-width', 2)
-                .attr('fill', 'none');
+                .attr('fill', 'none')
+                .on('click', () => handleElementClick({ type: 'halfcurve', x: x + offsetX, y }));
+
+            path.raise(); // Bring path to front
         };
 
         const drawCurve = ({ x, y, length }, offsetX) => {
-            svg.append('image')
+            const curveImage = svg.append('image')
                 .attr('href', curve)
                 .attr('x', x + offsetX)
                 .attr('y', y)
                 .attr('width', length)
-                .attr('height', length);
+                .attr('height', length)
+                .on('click', () => handleElementClick({ type: 'curve', x: x + offsetX, y }));
+
+            curveImage.raise(); // Bring image to front
         };
 
         const drawText = ({ x, y, content }, offsetX) => {
-            svg.append('text')
+            const text = svg.append('text')
                 .attr('x', x + offsetX)
                 .attr('y', y)
                 .text(content)
                 .attr('font-size', '14px')
-                .attr('fill', '#000');
+                .attr('fill', '#000')
+                .on('click', () => handleElementClick({ type: 'text', x: x + offsetX, y }));
+
+            text.raise(); // Bring text to front
         };
 
         const applyRotation = (element, x, y, length, orientation = '') => {
@@ -144,17 +159,20 @@ const CircuitDiagramD3 = () => {
             }
         };
 
+        const handleElementClick = (element) => {
+            alert(`Clicked on: ${element.type} at (${element.x}, ${element.y})`);
+        };
+
         const drawStructures = () => {
             circuitData.structures.forEach((structure, index) => {
                 const offsetX = index * 150; // Adjust offsetX to separate structures horizontally
                 structure.elements.forEach(element => drawElement(element, offsetX));
 
                 // Draw a dotted box around each structure
-                // DottedBox({ x: offsetX + 150, y: 80, width: 300, height: 300 });
-                DottedBox({ x: offsetX+180, y: 80, width: 300, row1Height: 150, row2Height: 140 });
-
+                DottedBox({ x: offsetX + 180, y: 80, width: 300, row1Height: 150, row2Height: 140 });
             });
         };
+
         const DottedBox = ({ x, y, width, row1Height, row2Height }) => {
             // First row
             svg.append('rect')
@@ -163,10 +181,10 @@ const CircuitDiagramD3 = () => {
                 .attr('width', width)
                 .attr('height', row1Height)
                 .attr('fill', 'none')
-                .attr('stroke', 'green')
+                .attr('stroke', '#000')
                 .attr('stroke-width', 1)
                 .attr('stroke-dasharray', '5,5');
-        
+
             // Second row
             svg.append('rect')
                 .attr('x', x)
@@ -174,18 +192,16 @@ const CircuitDiagramD3 = () => {
                 .attr('width', width)
                 .attr('height', row2Height)
                 .attr('fill', 'none')
-                .attr('stroke', 'green')
+                .attr('stroke', '#000')
                 .attr('stroke-width', 1)
                 .attr('stroke-dasharray', '5,5');
         };
-        
 
         drawStructures();
-
     }, []);
 
     return (
-        <svg ref={svgRef} width="100%" height="600" style={{ border: '1px solid black' }} />
+        <svg ref={svgRef} width="800" height="600"></svg>
     );
 };
 
