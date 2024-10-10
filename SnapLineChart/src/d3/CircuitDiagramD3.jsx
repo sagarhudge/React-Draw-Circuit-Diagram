@@ -11,51 +11,34 @@ const circuitData = {
         {
             id: 1,
             elements: [
-                { type: "busbar", orientation: "horizontal", x: 150, y: 100, length: 60, visible: true },
-                { type: "camera", x: 210, y: 83, length: 35, visible: true },
-                { type: "busbar", orientation: "horizontal", x: 245, y: 100, length: 60, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 180, y: 100, length: 60, visible: true },
+                { type: "camera", x: 240, y:88, length: 25, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 265, y: 100, length: 70, visible: true },
                 { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
-                { type: "ground", x: 240, y: 100, orientation: "left", length: 50, visible: true },
+                { type: "ground", x: 260, y: 110, orientation: "left", length: 30, visible: true },
                 { type: "busbar", orientation: "vertical", x: 305, y: 143, length: 50, visible: true },
                 { type: "text", x: 290, y: 210, content: "1200", visible: true },
                 { type: "busbar", orientation: "vertical", x: 305, y: 215, length: 200, visible: true },
-                { type: "busbar", orientation: "horizontal", x: 305, y: 265, length: -100, visible: true },
-                { type: "busbar", orientation: "vertical", x: 205, y: 334, length: -70, visible: true },
-                { type: "curve", x: 130, y: 314, length: 150, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 305, y: 265, length: -70, visible: true },
+                { type: "busbar", orientation: "vertical", x: 235, y: 334, length: -70, visible: true },
+                { type: "curve", x: 160, y: 314, length: 150, visible: true },
                 { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
             ]
         },
         {
             id: 2,
             elements: [
-                { type: "busbar", orientation: "horizontal", x: 150, y: 100, length: 60, visible: true },
-                { type: "camera", x: 210, y: 83, length: 35, visible: true },
-                { type: "busbar", orientation: "horizontal", x: 245, y: 100, length: 60, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 180, y: 100, length: 60, visible: true },
+                { type: "camera", x: 240, y:88, length: 25, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 265, y: 100, length: 70, visible: true },
                 { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
-                { type: "ground", x: 240, y: 100, orientation: "left", length: 50, visible: true },
+                { type: "ground", x: 260, y: 110, orientation: "left", length: 30, visible: true },
                 { type: "busbar", orientation: "vertical", x: 305, y: 143, length: 50, visible: true },
                 { type: "text", x: 290, y: 210, content: "1200", visible: true },
                 { type: "busbar", orientation: "vertical", x: 305, y: 215, length: 200, visible: true },
-                { type: "busbar", orientation: "horizontal", x: 305, y: 265, length: -100, visible: true },
-                { type: "busbar", orientation: "vertical", x: 205, y: 334, length: -70, visible: true },
-                { type: "curve", x: 130, y: 314, length: 150, visible: true },
-                { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
-            ]
-        } ,
-        {
-            id: 3,
-            elements: [
-                { type: "busbar", orientation: "horizontal", x: 150, y: 100, length: 60, visible: true },
-                { type: "camera", x: 210, y: 83, length: 35, visible: true },
-                { type: "busbar", orientation: "horizontal", x: 245, y: 100, length: 60, visible: true },
-                { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
-                { type: "ground", x: 240, y: 100, orientation: "left", length: 50, visible: true },
-                { type: "busbar", orientation: "vertical", x: 305, y: 143, length: 50, visible: true },
-                { type: "text", x: 290, y: 210, content: "1200", visible: true },
-                { type: "busbar", orientation: "vertical", x: 305, y: 215, length: 200, visible: true },
-                { type: "busbar", orientation: "horizontal", x: 305, y: 265, length: -100, visible: true },
-                { type: "busbar", orientation: "vertical", x: 205, y: 334, length: -70, visible: true },
-                { type: "curve", x: 130, y: 314, length: 150, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 305, y: 265, length: -70, visible: true },
+                { type: "busbar", orientation: "vertical", x: 235, y: 334, length: -70, visible: true },
+                { type: "curve", x: 160, y: 314, length: 150, visible: true },
                 { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
             ]
         } 
@@ -192,7 +175,7 @@ const CircuitDiagramD3 = () => {
 
         const drawStructures = () => {
             const numberOfStructures = circuitData.structures.length;
-            const boxWidth = 150; // Width of the dotted box
+            const boxWidth = 155; // Width of the dotted box
             const boxHeightRow1 = 130; // Height of the first row
             const boxHeightRow2 = 190; // Height of the second row
 
@@ -211,7 +194,7 @@ const CircuitDiagramD3 = () => {
                 .attr('y1', y)
                 .attr('x2', x + width)
                 .attr('y2', y)
-                .attr('stroke', '#000')
+                .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
@@ -221,7 +204,7 @@ const CircuitDiagramD3 = () => {
                 .attr('y1', y)
                 .attr('x2', x)
                 .attr('y2', y + row1Height)
-                .attr('stroke', '#000')
+                .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
@@ -231,7 +214,7 @@ const CircuitDiagramD3 = () => {
                 .attr('y1', y)
                 .attr('x2', x + width)
                 .attr('y2', y + row1Height)
-                .attr('stroke', '#000')
+                .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
@@ -241,7 +224,7 @@ const CircuitDiagramD3 = () => {
                 .attr('y1', y + row1Height)
                 .attr('x2', x + width)
                 .attr('y2', y + row1Height)
-                .attr('stroke', '#000')
+                .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
@@ -251,7 +234,7 @@ const CircuitDiagramD3 = () => {
                 .attr('y1', y + row1Height + row2Height)
                 .attr('x2', x + width)
                 .attr('y2', y + row1Height + row2Height)
-                .attr('stroke', '#000')
+                .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
@@ -261,7 +244,7 @@ const CircuitDiagramD3 = () => {
                 .attr('y1', y + row1Height)
                 .attr('x2', x)
                 .attr('y2', y + row1Height + row2Height)
-                .attr('stroke', '#000')
+                .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
@@ -271,7 +254,7 @@ const CircuitDiagramD3 = () => {
                 .attr('y1', y + row1Height)
                 .attr('x2', x + width)
                 .attr('y2', y + row1Height + row2Height)
-                .attr('stroke', '#000')
+                .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
         };
