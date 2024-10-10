@@ -41,7 +41,24 @@ const circuitData = {
                 { type: "curve", x: 130, y: 314, length: 150, visible: true },
                 { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
             ]
-        },
+        } ,
+        {
+            id: 3,
+            elements: [
+                { type: "busbar", orientation: "horizontal", x: 150, y: 100, length: 60, visible: true },
+                { type: "camera", x: 210, y: 83, length: 35, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 245, y: 100, length: 60, visible: true },
+                { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
+                { type: "ground", x: 240, y: 100, orientation: "left", length: 50, visible: true },
+                { type: "busbar", orientation: "vertical", x: 305, y: 143, length: 50, visible: true },
+                { type: "text", x: 290, y: 210, content: "1200", visible: true },
+                { type: "busbar", orientation: "vertical", x: 305, y: 215, length: 200, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 305, y: 265, length: -100, visible: true },
+                { type: "busbar", orientation: "vertical", x: 205, y: 334, length: -70, visible: true },
+                { type: "curve", x: 130, y: 314, length: 150, visible: true },
+                { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
+            ]
+        } 
     ]
 };
 
@@ -50,9 +67,7 @@ const CircuitDiagramD3 = () => {
 
     useEffect(() => {
         const svg = d3.select(svgRef.current);
-
-        // Clear the SVG before drawing to avoid duplicate elements
-        svg.selectAll('*').remove();
+        svg.selectAll('*').remove(); // Clear the SVG before drawing
 
         const drawElement = (element, offsetX) => {
             if (!element.visible) return;
@@ -135,16 +150,28 @@ const CircuitDiagramD3 = () => {
         };
 
         const drawText = ({ x, y, content }, offsetX) => {
-            const text = svg.append('text')
+            // Create a text element
+            const textElement = svg.append('text')
                 .attr('x', x + offsetX)
                 .attr('y', y)
                 .text(content)
                 .attr('font-size', '14px')
-                .attr('fill', '#000')
-                .on('click', () => handleElementClick({ type: 'text', x: x + offsetX, y }));
-
-            text.raise(); // Bring text to front
+                .attr('fill', '#000');
+        
+            // Get the bounding box of the text
+            const bbox = textElement.node().getBBox();
+        
+            // Create a rectangle behind the text for the border
+            svg.append('rect')
+                .attr('x', bbox.x - 2) // Adding some padding
+                .attr('y', bbox.y - 2) // Adding some padding
+                .attr('width', bbox.width + 4) // Adding some padding
+                .attr('height', bbox.height + 4) // Adding some padding
+                .attr('fill', 'none') // Make it transparent
+                .attr('stroke', '#000') // Border color
+                .attr('stroke-width', 1); // Border width
         };
+        
 
         const applyRotation = (element, x, y, length, orientation = '') => {
             const centerX = x + length / 2;
@@ -164,45 +191,95 @@ const CircuitDiagramD3 = () => {
         };
 
         const drawStructures = () => {
-            circuitData.structures.forEach((structure, index) => {
-                const offsetX = index * 150; // Adjust offsetX to separate structures horizontally
-                structure.elements.forEach(element => drawElement(element, offsetX));
+            const numberOfStructures = circuitData.structures.length;
+            const boxWidth = 150; // Width of the dotted box
+            const boxHeightRow1 = 130; // Height of the first row
+            const boxHeightRow2 = 190; // Height of the second row
 
-                // Draw a dotted box around each structure
-                DottedBox({ x: offsetX + 180, y: 80, width: 300, row1Height: 150, row2Height: 140 });
+            circuitData.structures.forEach((structure, index) => {
+                const offsetX = index * (boxWidth); // Adjust the offset for each structure
+                // Draw the dotted box for each structure
+                DottedBox({ x: offsetX+180, y: 50, width: boxWidth, row1Height: boxHeightRow1, row2Height: boxHeightRow2 });
+                structure.elements.forEach((element) => drawElement(element, offsetX));
             });
         };
 
         const DottedBox = ({ x, y, width, row1Height, row2Height }) => {
-            // First row
-            svg.append('rect')
-                .attr('x', x)
-                .attr('y', y)
-                .attr('width', width)
-                .attr('height', row1Height)
-                .attr('fill', 'none')
+            // Draw the top row of the box
+            svg.append('line')
+                .attr('x1', x)
+                .attr('y1', y)
+                .attr('x2', x + width)
+                .attr('y2', y)
                 .attr('stroke', '#000')
-                .attr('stroke-width', 1)
+                .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
-            // Second row
-            svg.append('rect')
-                .attr('x', x)
-                .attr('y', y + row1Height)
-                .attr('width', width)
-                .attr('height', row2Height)
-                .attr('fill', 'none')
+            // Draw the left side of the box
+            svg.append('line')
+                .attr('x1', x)
+                .attr('y1', y)
+                .attr('x2', x)
+                .attr('y2', y + row1Height)
                 .attr('stroke', '#000')
-                .attr('stroke-width', 1)
+                .attr('stroke-width', 1.5)
+                .attr('stroke-dasharray', '5,5');
+
+            // Draw the right side of the box
+            svg.append('line')
+                .attr('x1', x + width)
+                .attr('y1', y)
+                .attr('x2', x + width)
+                .attr('y2', y + row1Height)
+                .attr('stroke', '#000')
+                .attr('stroke-width', 1.5)
+                .attr('stroke-dasharray', '5,5');
+
+            // Draw the middle line of the box
+            svg.append('line')
+                .attr('x1', x)
+                .attr('y1', y + row1Height)
+                .attr('x2', x + width)
+                .attr('y2', y + row1Height)
+                .attr('stroke', '#000')
+                .attr('stroke-width', 1.5)
+                .attr('stroke-dasharray', '5,5');
+
+            // Draw the bottom row of the box
+            svg.append('line')
+                .attr('x1', x)
+                .attr('y1', y + row1Height + row2Height)
+                .attr('x2', x + width)
+                .attr('y2', y + row1Height + row2Height)
+                .attr('stroke', '#000')
+                .attr('stroke-width', 1.5)
+                .attr('stroke-dasharray', '5,5');
+
+            // Draw the left side of the bottom row
+            svg.append('line')
+                .attr('x1', x)
+                .attr('y1', y + row1Height)
+                .attr('x2', x)
+                .attr('y2', y + row1Height + row2Height)
+                .attr('stroke', '#000')
+                .attr('stroke-width', 1.5)
+                .attr('stroke-dasharray', '5,5');
+
+            // Draw the right side of the bottom row
+            svg.append('line')
+                .attr('x1', x + width)
+                .attr('y1', y + row1Height)
+                .attr('x2', x + width)
+                .attr('y2', y + row1Height + row2Height)
+                .attr('stroke', '#000')
+                .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
         };
 
-        drawStructures();
+        drawStructures(); // Call to draw structures
     }, []);
 
-    return (
-        <svg ref={svgRef} width="800" height="600"></svg>
-    );
+    return <svg ref={svgRef} width="100%" height="600" />;
 };
 
 export default CircuitDiagramD3;
