@@ -12,7 +12,7 @@ const circuitData = {
             id: 1,
             elements: [
                 { type: "busbar", orientation: "horizontal", x: 180, y: 100, length: 60, visible: true },
-                { type: "camera", x: 240, y:88, length: 25, visible: true },
+                { type: "camera", x: 240, y: 88, length: 25, visible: true },
                 { type: "busbar", orientation: "horizontal", x: 265, y: 100, length: 70, visible: true },
                 { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
                 { type: "ground", x: 260, y: 110, orientation: "left", length: 30, visible: true },
@@ -29,7 +29,7 @@ const circuitData = {
             id: 2,
             elements: [
                 { type: "busbar", orientation: "horizontal", x: 180, y: 100, length: 60, visible: true },
-                { type: "camera", x: 240, y:88, length: 25, visible: true },
+                { type: "camera", x: 240, y: 88, length: 25, visible: true },
                 { type: "busbar", orientation: "horizontal", x: 265, y: 100, length: 70, visible: true },
                 { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
                 { type: "ground", x: 260, y: 110, orientation: "left", length: 30, visible: true },
@@ -41,7 +41,7 @@ const circuitData = {
                 { type: "curve", x: 160, y: 314, length: 150, visible: true },
                 { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
             ]
-        } 
+        }
     ]
 };
 
@@ -140,10 +140,10 @@ const CircuitDiagramD3 = () => {
                 .text(content)
                 .attr('font-size', '14px')
                 .attr('fill', '#000');
-        
+
             // Get the bounding box of the text
             const bbox = textElement.node().getBBox();
-        
+
             // Create a rectangle behind the text for the border
             svg.append('rect')
                 .attr('x', bbox.x - 2) // Adding some padding
@@ -154,7 +154,7 @@ const CircuitDiagramD3 = () => {
                 .attr('stroke', '#000') // Border color
                 .attr('stroke-width', 1); // Border width
         };
-        
+
 
         const applyRotation = (element, x, y, length, orientation = '') => {
             const centerX = x + length / 2;
@@ -174,7 +174,6 @@ const CircuitDiagramD3 = () => {
         };
 
         const drawStructures = () => {
-            const numberOfStructures = circuitData.structures.length;
             const boxWidth = 155; // Width of the dotted box
             const boxHeightRow1 = 130; // Height of the first row
             const boxHeightRow2 = 190; // Height of the second row
@@ -182,8 +181,8 @@ const CircuitDiagramD3 = () => {
             circuitData.structures.forEach((structure, index) => {
                 const offsetX = index * (boxWidth); // Adjust the offset for each structure
                 // Draw the dotted box for each structure
-                DottedBox({ x: offsetX+180, y: 50, width: boxWidth, row1Height: boxHeightRow1, row2Height: boxHeightRow2 });
-                LineBox({ x:  offsetX+140, y: 50, width: 200, row1Height: 40, row2Height: 30 }); 
+                DottedBox({ x: offsetX + 180, y: 50, width: boxWidth, row1Height: boxHeightRow1, row2Height: boxHeightRow2 });
+
                 structure.elements.forEach((element) => drawElement(element, offsetX));
             });
         };
@@ -259,64 +258,7 @@ const CircuitDiagramD3 = () => {
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
         };
-        const LineBox = ({ x, y, width, row1Height, row2Height }) => {
-            // Draw the top row of the box
-            svg.append('line')
-                .attr('x1', x)
-                .attr('y1', y)
-                .attr('x2', x + width)
-                .attr('y2', y)
-                .attr('stroke', 'red')
-                .attr('stroke-width', 1.5);
-        
-            // Draw the left side of the box
-            svg.append('line')
-                .attr('x1', x)
-                .attr('y1', y)
-                .attr('x2', x)
-                .attr('y2', y + row1Height)
-                .attr('stroke', 'red')
-                .attr('stroke-width', 1.5);
-        
-            // Draw the right side of the box
-            svg.append('line')
-                .attr('x1', x + width)
-                .attr('y1', y)
-                .attr('x2', x + width)
-                .attr('y2', y + row1Height)
-                .attr('stroke', 'red')
-                .attr('stroke-width', 1.5);
-        
-            // Draw the bottom row of the box
-            svg.append('line')
-                .attr('x1', x)
-                .attr('y1', y + row1Height + row2Height)
-                .attr('x2', x + width)
-                .attr('y2', y + row1Height + row2Height)
-                .attr('stroke', 'red')
-                .attr('stroke-width', 1.5);
-        
-            // Draw the left side of the bottom row
-            svg.append('line')
-                .attr('x1', x)
-                .attr('y1', y + row1Height)
-                .attr('x2', x)
-                .attr('y2', y + row1Height + row2Height)
-                .attr('stroke', 'red')
-                .attr('stroke-width', 1.5);
-        
-            // Draw the right side of the bottom row
-            svg.append('line')
-                .attr('x1', x + width)
-                .attr('y1', y + row1Height)
-                .attr('x2', x + width)
-                .attr('y2', y + row1Height + row2Height)
-                .attr('stroke', 'red')
-                .attr('stroke-width', 1.5);
-        };
-        
-        
-        
+
 
         drawStructures(); // Call to draw structures
     }, []);
