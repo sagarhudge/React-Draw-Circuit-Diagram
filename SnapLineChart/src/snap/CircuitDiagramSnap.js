@@ -8,16 +8,30 @@ import camera from './camera.svg';
 // JSON input for the circuit diagram
 const circuitData = {
     elements: [
-        { type: "busbar", orientation: "horizontal", x: 50, y: 100, length: 250 },
-        { type: "camera", x: 175, y: 75, length: 50 },
-        { type: "openSwitch", x: 275, y: 96, orientation: "right", length: 50 },
-        { type: "ground", x: 240, y: 100, orientation: "left", length: 50 },
-        { type: "busbar", orientation: "vertical", x: 300, y: 143, length: 50 },
-        { type: "text", x: 283, y: 210, content: "1200" },
-        { type: "busbar", orientation: "vertical", x: 300, y: 215, length: 200 },
-        { type: "busbar", orientation: "horizontal", x: 300, y: 265, length: -150 },
-        { type: "busbar", orientation: "vertical", x: 150, y: 334, length: -70 },
-        { type: "curve", orientation: "", x: 150, y: 334, length: 150 },
+        { type: "busbar", orientation: "horizontal", x: 150, y: 100, length: 60, visible: true },
+        { type: "busbar", orientation: "horizontal", x: 240, y: 100, length: 60, visible: true },
+        { type: "camera", x: 210, y: 83, length: 35, visible: true },
+        { type: "openSwitch", x: 275, y: 96, orientation: "right", length: 50, visible: true },
+        { type: "ground", x: 240, y: 100, orientation: "left", length: 50, visible: true },
+        { type: "busbar", orientation: "vertical", x: 300, y: 143, length: 50, visible: true },
+        { type: "text", x: 283, y: 210, content: "1200", visible: true },
+        { type: "busbar", orientation: "vertical", x: 300, y: 215, length: 200, visible: true },
+        { type: "busbar", orientation: "horizontal", x: 300, y: 265, length: -100, visible: true },
+        { type: "busbar", orientation: "vertical", x: 200, y: 334, length: -70, visible: true },
+        { type: "curve", x: 125, y: 314, length: 150, visible: true },
+        { type: "halfcurve", x: 285, y: 430, length: 30, visible: true },
+        // //second cercuit
+        // { type: "busbar", orientation: "horizontal", x: 350, y: 100, length: 200, visible: true },
+        // { type: "camera", x: 425, y: 85, length: 30, visible: true },
+        // { type: "openSwitch", x: 525, y: 96, orientation: "right", length: 50, visible: true },
+        // { type: "ground", x: 490, y: 100, orientation: "left", length: 50, visible: true },
+        // { type: "busbar", orientation: "vertical", x: 550, y: 143, length: 50, visible: true },
+        // { type: "text", x: 533, y: 210, content: "1200", visible: true },
+        // { type: "busbar", orientation: "vertical", x: 550, y: 215, length: 200, visible: true },
+        // { type: "busbar", orientation: "horizontal", x: 550, y: 265, length: -100, visible: true },
+        // { type: "busbar", orientation: "vertical", x: 450, y: 334, length: -70, visible: true },
+        // { type: "curve", x: 375, y: 314, length: 150, visible: true },
+        // { type: "halfcurve", x: 535, y: 430, length: 30, visible: true },
     ]
 };
 
@@ -28,18 +42,20 @@ const CircuitDiagramSnap = () => {
         const s = Snap(svgRef.current);
 
         const drawElement = (element) => {
+            if (!element.visible) return;
+
             switch (element.type) {
                 case "busbar":
                     drawBusbar(element);
                     break;
                 case "camera":
-                    drawCamera(element);
+                    drawImage(camera, element);
                     break;
                 case "openSwitch":
-                    drawOpenSwitch(element);
+                    drawImage(openSwitch, element);
                     break;
                 case "ground":
-                    drawGround(element);
+                    drawImage(ground, element);
                     break;
                 case "text":
                     drawText(element);
@@ -47,37 +63,37 @@ const CircuitDiagramSnap = () => {
                 case "curve":
                     drawCurve(element);
                     break;
+                case "halfcurve":
+                    drawHalfCurve(element);
+                    break;
                 default:
                     break;
             }
         };
 
         const drawBusbar = ({ orientation, x, y, length }) => {
-            if (orientation === "horizontal") {
-                s.line(x, y, x + length, y).attr({ stroke: "#000", strokeWidth: 2 });
-            } else if (orientation === "vertical") {
-                s.line(x, y, x, y + length).attr({ stroke: "#000", strokeWidth: 2 });
+            const line = orientation === "horizontal"
+                ? s.line(x, y, x + length, y)
+                : s.line(x, y, x, y + length);
+            line.attr({ stroke: "#000", strokeWidth: 1.5 });
+        };
+
+        const drawImage = (imgSrc, { x, y, length, orientation }) => {
+            const image = s.image(imgSrc, x, y, length, length);
+            applyRotation(image, x, y, length, orientation);
+            if (imgSrc === camera) {
+                image.click(() => alert('Camera clicked!'));
             }
         };
 
-        const drawCamera = ({ x, y, length }) => {
-            const cam = s.image(camera, x, y, length, length);
-            cam.click(() => alert('Camera clicked!'));
+        const drawHalfCurve = ({ x, y, length }) => {
+            const halfCurvePath = `M${x},${y} Q${x + length / 2},${y - length} ${x + length},${y}`;
+            s.path(halfCurvePath).attr({ stroke: "#000", strokeWidth: 2, fill: "none" });
         };
 
-        const drawGround = ({ x, y, orientation, length }) => {
-            const groundImage = s.image(ground, x, y, length, length);
-            applyRotation(groundImage, x, y, length, orientation);
-        };
-
-        const drawOpenSwitch = ({ x, y, orientation, length }) => {
-            const switchImage = s.image(openSwitch, x, y, length, length);
-            applyRotation(switchImage, x, y, length, orientation);
-        };
-
-        const drawCurve = ({ x, y, orientation, length }) => {
+        const drawCurve = ({ x, y, length }) => {
             const curveImage = s.image(curve, x, y, length, length);
-            applyRotation(curveImage, x, y, length, orientation);
+            applyRotation(curveImage, x, y, length);
         };
 
         const drawText = ({ x, y, content }) => {
@@ -85,39 +101,46 @@ const CircuitDiagramSnap = () => {
             const bbox = textElement.getBBox();
             const border = s.rect(bbox.x - 2, bbox.y - 2, bbox.width + 4, bbox.height + 4)
                 .attr({ fill: "none", stroke: "#000", strokeWidth: 1 });
-
             s.group(border, textElement);
         };
 
-        const applyRotation = (element, x, y, length, orientation) => {
+        const applyRotation = (element, x, y, length, orientation = '') => {
             const centerX = x + length / 2;
             const centerY = y + length / 2;
-
-            switch (orientation) {
-                case "left":
-                    element.transform(`rotate(90, ${centerX}, ${centerY})`);
-                    break;
-                case "right":
-                    element.transform(`rotate(-90, ${centerX}, ${centerY})`);
-                    break;
-                case "down":
-                    element.transform(`rotate(180, ${centerX}, ${centerY})`);
-                    break;
-                default:
-                    break; // Default is pointing up (no rotation)
+            const rotations = {
+                left: `rotate(90, ${centerX}, ${centerY})`,
+                right: `rotate(-90, ${centerX}, ${centerY})`,
+                down: `rotate(180, ${centerX}, ${centerY})`,
+            };
+            if (orientation in rotations) {
+                element.transform(rotations[orientation]);
             }
+        };
+
+        const DottedBox = ({ x, y, width, height }) => {
+            const sections = [0, height / 2];
+            sections.forEach(section => {
+                s.rect(x, y + section, width, height / 2).attr({
+                    fill: "none",
+                    stroke: "green",
+                    strokeWidth: 1,
+                    strokeDasharray: "5,5",
+                });
+            });
         };
 
         // Clear the SVG before drawing to avoid duplicate elements
         s.clear();
 
-        // Loop through elements in the JSON and draw them
+        // Draw elements from JSON input
         circuitData.elements.forEach(drawElement);
+        DottedBox({ x: 150, y: 80, width: 200, height: 290 });
+        DottedBox({ x: 380, y: 80, width: 200, height: 290 });
 
     }, []);
 
     return (
-        <svg ref={svgRef} width="800" height="600" style={{ border: "1px solid black" }} />
+        <svg ref={svgRef} width="98%" height="600" style={{ border: "1px solid black" }} />
     );
 };
 
