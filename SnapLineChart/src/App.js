@@ -1,5 +1,6 @@
 import React from 'react';
 import CircuitDiagramSnap from './snap/CircuitDiagramSnap';
+import CircuitDiagramD3 from './d3/CircuitDiagramD3';
 
 const Diagram = ({ elements }) => {
   return (
@@ -140,7 +141,7 @@ const App = () => {
     ]
   };
 
-  return <CircuitDiagramSnap />;
+  return <CircuitDiagramD3 />;
 };
 
 export default App;
