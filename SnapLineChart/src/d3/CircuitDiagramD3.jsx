@@ -183,6 +183,7 @@ const CircuitDiagramD3 = () => {
                 const offsetX = index * (boxWidth); // Adjust the offset for each structure
                 // Draw the dotted box for each structure
                 DottedBox({ x: offsetX+180, y: 50, width: boxWidth, row1Height: boxHeightRow1, row2Height: boxHeightRow2 });
+                LineBox({ x:  offsetX+140, y: 50, width: 200, row1Height: 40, row2Height: 30 }); 
                 structure.elements.forEach((element) => drawElement(element, offsetX));
             });
         };
@@ -258,6 +259,64 @@ const CircuitDiagramD3 = () => {
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
         };
+        const LineBox = ({ x, y, width, row1Height, row2Height }) => {
+            // Draw the top row of the box
+            svg.append('line')
+                .attr('x1', x)
+                .attr('y1', y)
+                .attr('x2', x + width)
+                .attr('y2', y)
+                .attr('stroke', 'red')
+                .attr('stroke-width', 1.5);
+        
+            // Draw the left side of the box
+            svg.append('line')
+                .attr('x1', x)
+                .attr('y1', y)
+                .attr('x2', x)
+                .attr('y2', y + row1Height)
+                .attr('stroke', 'red')
+                .attr('stroke-width', 1.5);
+        
+            // Draw the right side of the box
+            svg.append('line')
+                .attr('x1', x + width)
+                .attr('y1', y)
+                .attr('x2', x + width)
+                .attr('y2', y + row1Height)
+                .attr('stroke', 'red')
+                .attr('stroke-width', 1.5);
+        
+            // Draw the bottom row of the box
+            svg.append('line')
+                .attr('x1', x)
+                .attr('y1', y + row1Height + row2Height)
+                .attr('x2', x + width)
+                .attr('y2', y + row1Height + row2Height)
+                .attr('stroke', 'red')
+                .attr('stroke-width', 1.5);
+        
+            // Draw the left side of the bottom row
+            svg.append('line')
+                .attr('x1', x)
+                .attr('y1', y + row1Height)
+                .attr('x2', x)
+                .attr('y2', y + row1Height + row2Height)
+                .attr('stroke', 'red')
+                .attr('stroke-width', 1.5);
+        
+            // Draw the right side of the bottom row
+            svg.append('line')
+                .attr('x1', x + width)
+                .attr('y1', y + row1Height)
+                .attr('x2', x + width)
+                .attr('y2', y + row1Height + row2Height)
+                .attr('stroke', 'red')
+                .attr('stroke-width', 1.5);
+        };
+        
+        
+        
 
         drawStructures(); // Call to draw structures
     }, []);
