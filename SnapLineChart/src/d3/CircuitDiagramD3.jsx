@@ -168,10 +168,8 @@ const CircuitDiagramD3 = () => {
         const handleElementClick = (element) => {
             alert(`Clicked on: ${element.type} at (${element.x}, ${element.y})`);
         };
-
         const drawStructures = () => {
-            const boxHeightRow1 = 130; // Height of the first row
-            const boxHeightRow2 = 190; // Height of the second row
+
             const boxWidth = 155; // Width of the dotted box
 
             circuitData.structures.forEach((structure, index) => {
@@ -181,6 +179,7 @@ const CircuitDiagramD3 = () => {
                 structure.elements.forEach((element, index) => drawElement(element, offsetX, index));
             });
         };
+
 
         const drawRectBox = ({ x, y, row1Height, row2Height, width }, offsetX, isDotted) => {
             // Draw the main rectangle for the box
@@ -195,7 +194,7 @@ const CircuitDiagramD3 = () => {
                 .attr('stroke-dasharray', isDotted ? '5,5' : 'none')
                 .attr('pointer-events', 'all') // Ensure pointer events are captured
                 .on('click', () => handleBoxClick({ x: x + offsetX, y, width, height: row1Height + row2Height, isDotted }));
-        
+
             // Draw the middle dotted line only if it's a dotted box
             if (isDotted) {
                 const middleY = y + row1Height; // Middle line position
@@ -210,26 +209,24 @@ const CircuitDiagramD3 = () => {
                     .attr('pointer-events', 'all') // Ensure pointer events are captured
                     .on('click', () => handleBoxClick({ x: x + offsetX, y, width, height: row1Height + row2Height, isDotted }));
             }
-        
+
             // Highlight the selected box if it is selected
             if (selectedBox && selectedBox.x === x + offsetX && selectedBox.y === y) {
                 rect.attr('fill', isDotted ? 'rgba(208, 224, 255, 0.5)' : 'rgba(255, 204, 204, 0.5)'); // Change fill color on selection with transparency
             }
         };
-        
-        
 
         const handleBoxClick = (box) => {
             // Toggle selection
             const newSelectedBox = selectedBox && selectedBox.x === box.x && selectedBox.y === box.y ? null : box;
             setSelectedBox(newSelectedBox);
-            
+
             // Update the fill color of the previously selected box if it exists
             if (selectedBox) {
                 const prevRect = svg.select(`rect[x="${selectedBox.x}"][y="${selectedBox.y}"]`);
                 prevRect.attr('fill', 'none'); // Reset previous box fill
             }
-            
+
             // Set the fill color for the newly selected box
             if (newSelectedBox) {
                 const newRect = svg.select(`rect[x="${newSelectedBox.x}"][y="${newSelectedBox.y}"]`);
@@ -238,12 +235,14 @@ const CircuitDiagramD3 = () => {
                 }
             }
         };
-        
+
 
         drawStructures(); // Call to draw structures
     }, [selectedBox]); // Re-draw when selectedBox changes
 
-    return <svg ref={svgRef} width="100%" height="600" />;
+    return <div style={{ overflowX: 'auto', width: '100%', border: '1px solid #ccc' }}>
+        <svg ref={svgRef} width="2000" height="600" /> {/* Set a fixed width to allow scrolling */}
+    </div>;
 };
 
 export default CircuitDiagramD3;

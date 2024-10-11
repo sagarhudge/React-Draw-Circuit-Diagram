@@ -6,6 +6,12 @@
   height: 40vmin;
   pointer-events: none;
 }
+.scrollable-container {
+  overflow-x: auto; /* Allow horizontal scrolling */
+  width: 100%; /* Full width of the parent container */
+  border: 1px solid #ccc; /* Optional: Add a border for visibility */
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
