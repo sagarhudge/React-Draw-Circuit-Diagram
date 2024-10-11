@@ -1,18 +1,7 @@
-<svg width="100" height="300" xmlns="http://www.w3.org/2000/svg">
- 
-
-  <!-- Top horizontal line inside the fuse body -->
-  <line x1="40" y1="70" x2="60" y2="70" stroke="black" stroke-width="2" />
-
-  <!-- Fuse body (vertical rectangle) -->
-  <rect x="40" y="60" width="20" height="120" stroke="black" stroke-width="2" fill="none" />
-
-  <!-- Middle horizontal line inside the fuse body -->
-  <line x1="40" y1="170" x2="60" y2="170" stroke="black" stroke-width="2" />
-
-  <!-- Vertical line representing the top connection -->
-  <line x1="50" y1="30" x2="50" y2="60" stroke="black" stroke-width="2" />
-
-  <!-- Vertical line representing the bottom connection -->
-  <line x1="50" y1="210" x2="50" y2="180" stroke="black" stroke-width="2" />
+<?xml version='1.0' encoding='iso-8859-1'?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg fill="#000000" height="800px" width="800px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 298 298" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 298 298">
+  <g>
+    <path d="M298,141h-50v-41H50v41H0v16h50v41h198v-41h50V141z M66,182v-66h166v66H66z"/>
+  </g>
 </svg>

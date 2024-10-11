@@ -1,0 +1,637 @@
+{
+    "structures": [
+        {
+            "id": 0,
+            "elements": [
+                {
+                    "type": "redBox",
+                    "x": 159,
+                    "y": 35,
+                    "row1Height": 150,
+                    "row2Height": 230,
+                    "width": 180,
+                    "visible": true
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "elements": [
+                {
+                    "type": "dotBox",
+                    "x": 185,
+                    "y": 55,
+                    "row1Height": 130,
+                    "row2Height": 160,
+                    "width": 150,
+                    "visible": true
+                },
+                {
+                    "type": "redBox",
+                    "x": 170,
+                    "y": 35,
+                    "row1Height": 150,
+                    "row2Height": 230,
+                    "width": 180,
+                    "visible": true
+                },
+                {
+                    "type": "trans",
+                    "orientation": "vertical",
+                    "x": 167,
+                    "y": 5,
+                    "length": 410,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 164,
+                    "y": 5,
+                    "length": 186,
+                    "visible": true
+                },
+                {
+                    "type": "trans",
+                    "orientation": "vertical",
+                    "x": 348,
+                    "y": 5,
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 35,
+                    "length": 25,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 5,
+                    "length": 15,
+                    "visible": true
+                },
+                {
+                    "type": "fuse",
+                    "x": 297.5,
+                    "y": 20,
+                    "orientation": "right",
+                    "length": 15,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 180,
+                    "y": 100,
+                    "length": 60,
+                    "visible": true
+                },
+                {
+                    "type": "camera",
+                    "x": 240,
+                    "y": 88,
+                    "length": 25,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 265,
+                    "y": 100,
+                    "length": 90,
+                    "visible": true
+                },
+                {
+                    "type": "resistor",
+                    "orientation": "right",
+                    "x": 315,
+                    "y": 84,
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "openSwitch",
+                    "x": 280,
+                    "y": 56,
+                    "orientation": "right",
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "ground",
+                    "x": 260,
+                    "y": 60,
+                    "orientation": "left",
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "openSwitch",
+                    "x": 280,
+                    "y": 96,
+                    "orientation": "right",
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "ground",
+                    "x": 260,
+                    "y": 110,
+                    "orientation": "left",
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 143,
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "text",
+                    "x": 290,
+                    "y": 210,
+                    "content": "1200",
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 215,
+                    "length": 230,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 305,
+                    "y": 265,
+                    "length": -70,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 235,
+                    "y": 334,
+                    "length": -70,
+                    "visible": true
+                },
+                {
+                    "type": "curve",
+                    "x": 185,
+                    "y": 314,
+                    "length": 100,
+                    "visible": true
+                },
+                {
+                    "type": "halfcurve",
+                    "x": 290,
+                    "y": 460,
+                    "length": 30,
+                    "visible": true
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "elements": [
+                {
+                    "type": "dotBox",
+                    "x": 190,
+                    "y": 55,
+                    "row1Height": 130,
+                    "row2Height": 160,
+                    "width": 150,
+                    "visible": true
+                },
+                {
+                    "type": "redBox",
+                    "x": 175,
+                    "y": 35,
+                    "row1Height": 150,
+                    "row2Height": 230,
+                    "width": 180,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 180,
+                    "y": 100,
+                    "length": 60,
+                    "visible": true
+                },
+                {
+                    "type": "camera",
+                    "x": 240,
+                    "y": 88,
+                    "length": 25,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 265,
+                    "y": 100,
+                    "length": 90,
+                    "visible": true
+                },
+                {
+                    "type": "openSwitch",
+                    "x": 280,
+                    "y": 96,
+                    "orientation": "right",
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "ground",
+                    "x": 260,
+                    "y": 110,
+                    "orientation": "left",
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 143,
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "text",
+                    "x": 290,
+                    "y": 210,
+                    "content": "1200",
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 215,
+                    "length": 230,
+                    "visible": true
+                },
+                {
+                    "type": "resistor",
+                    "orientation": "down",
+                    "x": 290,
+                    "y": 375,
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 305,
+                    "y": 265,
+                    "length": -70,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 235,
+                    "y": 334,
+                    "length": -70,
+                    "visible": true
+                },
+                {
+                    "type": "curve",
+                    "x": 185,
+                    "y": 314,
+                    "length": 100,
+                    "visible": true
+                },
+                {
+                    "type": "halfcurve",
+                    "x": 290,
+                    "y": 460,
+                    "length": 30,
+                    "visible": true
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "elements": [
+                {
+                    "type": "dotBox",
+                    "x": 190,
+                    "y": 55,
+                    "row1Height": 130,
+                    "row2Height": 160,
+                    "width": 150,
+                    "visible": true
+                },
+                {
+                    "type": "redBox",
+                    "x": 180,
+                    "y": 35,
+                    "row1Height": 150,
+                    "row2Height": 230,
+                    "width": 180,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 175,
+                    "y": 100,
+                    "length": 65,
+                    "visible": true
+                },
+                {
+                    "type": "camera",
+                    "x": 240,
+                    "y": 88,
+                    "length": 25,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 265,
+                    "y": 100,
+                    "length": 75,
+                    "visible": true
+                },
+                {
+                    "type": "openSwitch",
+                    "x": 280,
+                    "y": 96,
+                    "orientation": "right",
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "ground",
+                    "x": 260,
+                    "y": 110,
+                    "orientation": "left",
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 143,
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "text",
+                    "x": 290,
+                    "y": 210,
+                    "content": "1200",
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 215,
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 380,
+                    "y": 265,
+                    "length": -190,
+                    "visible": true
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "elements": [
+                {
+                    "type": "dotBox",
+                    "x": 200,
+                    "y": 55,
+                    "row1Height": 130,
+                    "row2Height": 160,
+                    "width": 150,
+                    "visible": true
+                },
+                {
+                    "type": "redBox",
+                    "x": 185,
+                    "y": 35,
+                    "row1Height": 150,
+                    "row2Height": 230,
+                    "width": 180,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 200,
+                    "y": 100,
+                    "length": 45,
+                    "visible": true
+                },
+                {
+                    "type": "camera",
+                    "x": 240,
+                    "y": 88,
+                    "length": 25,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 265,
+                    "y": 100,
+                    "length": 120,
+                    "visible": true
+                },
+                {
+                    "type": "openSwitch",
+                    "x": 280,
+                    "y": 96,
+                    "orientation": "right",
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "ground",
+                    "x": 260,
+                    "y": 110,
+                    "orientation": "left",
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 143,
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "text",
+                    "x": 290,
+                    "y": 210,
+                    "content": "1200",
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 215,
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 350,
+                    "y": 265,
+                    "length": -170,
+                    "visible": true
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "elements": [
+                {
+                    "type": "dotBox",
+                    "x": 205,
+                    "y": 55,
+                    "row1Height": 130,
+                    "row2Height": 190,
+                    "width": 150,
+                    "visible": true
+                },
+                {
+                    "type": "redBox",
+                    "x": 190,
+                    "y": 35,
+                    "row1Height": 150,
+                    "row2Height": 230,
+                    "width": 180,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 180,
+                    "y": 100,
+                    "length": 60,
+                    "visible": true
+                },
+                {
+                    "type": "camera",
+                    "x": 240,
+                    "y": 88,
+                    "length": 25,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 265,
+                    "y": 100,
+                    "length": 90,
+                    "visible": true
+                },
+                {
+                    "type": "resistor",
+                    "orientation": "right",
+                    "x": 315,
+                    "y": 84,
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "openSwitch",
+                    "x": 280,
+                    "y": 96,
+                    "orientation": "right",
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "ground",
+                    "x": 260,
+                    "y": 110,
+                    "orientation": "left",
+                    "length": 30,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 143,
+                    "length": 50,
+                    "visible": true
+                },
+                {
+                    "type": "text",
+                    "x": 290,
+                    "y": 210,
+                    "content": "1200",
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 305,
+                    "y": 215,
+                    "length": 230,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "horizontal",
+                    "x": 305,
+                    "y": 265,
+                    "length": -70,
+                    "visible": true
+                },
+                {
+                    "type": "busbar",
+                    "orientation": "vertical",
+                    "x": 235,
+                    "y": 334,
+                    "length": -70,
+                    "visible": true
+                },
+                {
+                    "type": "curve",
+                    "x": 160,
+                    "y": 314,
+                    "length": 150,
+                    "visible": true
+                },
+                {
+                    "type": "halfcurve",
+                    "x": 290,
+                    "y": 460,
+                    "length": 30,
+                    "visible": true
+                }
+            ]
+        }
+    ]
+}
