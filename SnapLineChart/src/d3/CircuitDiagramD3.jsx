@@ -13,7 +13,7 @@ const circuitData = {
             elements: [
                 { type: "busbar", orientation: "horizontal", x: 180, y: 100, length: 60, visible: true },
                 { type: "camera", x: 240, y: 88, length: 25, visible: true },
-                { type: "busbar", orientation: "horizontal", x: 265, y: 100, length: 70, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 265, y: 100, length: 90, visible: true },
                 { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
                 { type: "ground", x: 260, y: 110, orientation: "left", length: 30, visible: true },
                 { type: "busbar", orientation: "vertical", x: 305, y: 143, length: 50, visible: true },
@@ -23,6 +23,8 @@ const circuitData = {
                 { type: "busbar", orientation: "vertical", x: 235, y: 334, length: -70, visible: true },
                 { type: "curve", x: 160, y: 314, length: 150, visible: true },
                 { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
+                // { type: "dotBox",  x: 180, y: 0, width: 200, row1Height: 150, row2Height: 150 },
+                { type: "dotBox", x: 180, y: 55, row1Height: 130, row2Height: 190, width: 150, visible: true },
             ]
         },
         {
@@ -30,7 +32,7 @@ const circuitData = {
             elements: [
                 { type: "busbar", orientation: "horizontal", x: 180, y: 100, length: 60, visible: true },
                 { type: "camera", x: 240, y: 88, length: 25, visible: true },
-                { type: "busbar", orientation: "horizontal", x: 265, y: 100, length: 70, visible: true },
+                { type: "busbar", orientation: "horizontal", x: 265, y: 100, length: 90, visible: true },
                 { type: "openSwitch", x: 280, y: 96, orientation: "right", length: 50, visible: true },
                 { type: "ground", x: 260, y: 110, orientation: "left", length: 30, visible: true },
                 { type: "busbar", orientation: "vertical", x: 305, y: 143, length: 50, visible: true },
@@ -40,6 +42,8 @@ const circuitData = {
                 { type: "busbar", orientation: "vertical", x: 235, y: 334, length: -70, visible: true },
                 { type: "curve", x: 160, y: 314, length: 150, visible: true },
                 { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
+                { type: "dotBox", x: 180, y: 55, row1Height: 130, row2Height: 190, width: 150, visible: true },
+
             ]
         }
     ]
@@ -76,6 +80,11 @@ const CircuitDiagramD3 = () => {
                     break;
                 case "halfcurve":
                     drawHalfCurve(element, offsetX);
+                case "halfcurve":
+                    drawCurve(element, offsetX);
+                    break;
+                case "dotBox":
+                    drawDottedBox(element, offsetX);
                     break;
                 default:
                     break;
@@ -174,65 +183,64 @@ const CircuitDiagramD3 = () => {
         };
 
         const drawStructures = () => {
-            const boxWidth = 155; // Width of the dotted box
             const boxHeightRow1 = 130; // Height of the first row
             const boxHeightRow2 = 190; // Height of the second row
+            const boxWidth = 155; // Width of the dotted box
 
             circuitData.structures.forEach((structure, index) => {
-                const offsetX = index * (boxWidth); // Adjust the offset for each structure
-                // Draw the dotted box for each structure
-                DottedBox({ x: offsetX + 180, y: 50, width: boxWidth, row1Height: boxHeightRow1, row2Height: boxHeightRow2 });
+                const offsetX = index * (boxWidth + 20); // Adjust the offset for each structure with some margin
 
+                // Draw the elements of the current structure
                 structure.elements.forEach((element) => drawElement(element, offsetX));
             });
         };
 
-        const DottedBox = ({ x, y, width, row1Height, row2Height }) => {
-            // Draw the top row of the box
+        const drawDottedBox = ({ x, y, row1Height, row2Height, width }, offsetX) => {
+            // Draw the top edge of the box
             svg.append('line')
-                .attr('x1', x)
+                .attr('x1', x + offsetX)
                 .attr('y1', y)
-                .attr('x2', x + width)
+                .attr('x2', x + offsetX + width)
                 .attr('y2', y)
                 .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
-            // Draw the left side of the box
+            // Draw the left side of the top row
             svg.append('line')
-                .attr('x1', x)
+                .attr('x1', x + offsetX)
                 .attr('y1', y)
-                .attr('x2', x)
+                .attr('x2', x + offsetX)
                 .attr('y2', y + row1Height)
                 .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
-            // Draw the right side of the box
+            // Draw the right side of the top row
             svg.append('line')
-                .attr('x1', x + width)
+                .attr('x1', x + offsetX + width)
                 .attr('y1', y)
-                .attr('x2', x + width)
+                .attr('x2', x + offsetX + width)
                 .attr('y2', y + row1Height)
                 .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
-            // Draw the middle line of the box
+            // Draw the middle horizontal line
             svg.append('line')
-                .attr('x1', x)
+                .attr('x1', x + offsetX)
                 .attr('y1', y + row1Height)
-                .attr('x2', x + width)
+                .attr('x2', x + offsetX + width)
                 .attr('y2', y + row1Height)
                 .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
 
-            // Draw the bottom row of the box
+            // Draw the bottom edge of the box
             svg.append('line')
-                .attr('x1', x)
+                .attr('x1', x + offsetX)
                 .attr('y1', y + row1Height + row2Height)
-                .attr('x2', x + width)
+                .attr('x2', x + offsetX + width)
                 .attr('y2', y + row1Height + row2Height)
                 .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
@@ -240,9 +248,9 @@ const CircuitDiagramD3 = () => {
 
             // Draw the left side of the bottom row
             svg.append('line')
-                .attr('x1', x)
+                .attr('x1', x + offsetX)
                 .attr('y1', y + row1Height)
-                .attr('x2', x)
+                .attr('x2', x + offsetX)
                 .attr('y2', y + row1Height + row2Height)
                 .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
@@ -250,14 +258,15 @@ const CircuitDiagramD3 = () => {
 
             // Draw the right side of the bottom row
             svg.append('line')
-                .attr('x1', x + width)
+                .attr('x1', x + offsetX + width)
                 .attr('y1', y + row1Height)
-                .attr('x2', x + width)
+                .attr('x2', x + offsetX + width)
                 .attr('y2', y + row1Height + row2Height)
                 .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
         };
+
 
 
         drawStructures(); // Call to draw structures
