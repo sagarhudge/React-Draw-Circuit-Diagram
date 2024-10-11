@@ -183,23 +183,41 @@ const CircuitDiagramD3 = () => {
         };
 
         const drawRectBox = ({ x, y, row1Height, row2Height, width }, offsetX, isDotted) => {
+            // Draw the main rectangle for the box
             const rect = svg.append('rect')
                 .attr('x', x + offsetX)
                 .attr('y', y)
                 .attr('width', width)
                 .attr('height', row1Height + row2Height)
-                .attr('fill', 'none') // Set default fill to none
+                .attr('fill', 'none') // Set initial fill to none
                 .attr('stroke', isDotted ? '#1919b5' : '#4c4c4c')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', isDotted ? '5,5' : 'none')
                 .attr('pointer-events', 'all') // Ensure pointer events are captured
-                .on('click', () => handleBoxClick({ x: x + offsetX, y, width, height: row1Height + row2Height }));
+                .on('click', () => handleBoxClick({ x: x + offsetX, y, width, height: row1Height + row2Height, isDotted }));
+        
+            // Draw the middle dotted line only if it's a dotted box
+            if (isDotted) {
+                const middleY = y + row1Height; // Middle line position
+                const middleLine = svg.append('line')
+                    .attr('x1', x + offsetX)
+                    .attr('y1', middleY)
+                    .attr('x2', x + offsetX + width)
+                    .attr('y2', middleY)
+                    .attr('stroke', '#1919b5') // Dotted line color
+                    .attr('stroke-width', 1.5)
+                    .attr('stroke-dasharray', '5,5') // Dotted style
+                    .attr('pointer-events', 'all') // Ensure pointer events are captured
+                    .on('click', () => handleBoxClick({ x: x + offsetX, y, width, height: row1Height + row2Height, isDotted }));
+            }
         
             // Highlight the selected box if it is selected
             if (selectedBox && selectedBox.x === x + offsetX && selectedBox.y === y) {
-                rect.attr('fill', isDotted ? '#d0e0ff' : '#ffcccc'); // Change fill color on selection
+                rect.attr('fill', isDotted ? 'rgba(208, 224, 255, 0.5)' : 'rgba(255, 204, 204, 0.5)'); // Change fill color on selection with transparency
             }
         };
+        
+        
 
         const handleBoxClick = (box) => {
             // Toggle selection
@@ -213,11 +231,14 @@ const CircuitDiagramD3 = () => {
             }
             
             // Set the fill color for the newly selected box
-            const newRect = svg.select(`rect[x="${newSelectedBox.x}"][y="${newSelectedBox.y}"]`);
-            if (newRect.node()) {
-                newRect.attr('fill', newSelectedBox.isDotted ? '#d0e0ff' : '#ffcccc'); // Change fill color on selection
+            if (newSelectedBox) {
+                const newRect = svg.select(`rect[x="${newSelectedBox.x}"][y="${newSelectedBox.y}"]`);
+                if (newRect.node()) {
+                    newRect.attr('fill', newSelectedBox.isDotted ? 'rgba(208, 224, 255, 0.5)' : 'rgba(255, 204, 204, 0.5)'); // Change fill color on selection with transparency
+                }
             }
         };
+        
 
         drawStructures(); // Call to draw structures
     }, [selectedBox]); // Re-draw when selectedBox changes
