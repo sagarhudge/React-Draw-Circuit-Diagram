@@ -240,9 +240,17 @@ const CircuitDiagramD3 = () => {
         drawStructures(); // Call to draw structures
     }, [selectedBox]); // Re-draw when selectedBox changes
 
-    return <div style={{ overflowX: 'auto', width: '100%', border: '1px solid #ccc' }}>
+    return <div style={{
+        display: 'flex',
+        justifyContent: 'center', // Center the container horizontally
+        alignItems: 'center', // Center the container vertically
+        overflowX: 'auto', // Allow horizontal scrolling
+        height: '100vh', // Full height of the viewport
+        width: '100%', // Full width of the parent container
+        border: '1px solid #ccc', // Optional: Add a border for visibility
+    }}>
         <svg ref={svgRef} width="2000" height="600" /> {/* Set a fixed width to allow scrolling */}
-    </div>;
+    </div>
 };
 
 export default CircuitDiagramD3;
