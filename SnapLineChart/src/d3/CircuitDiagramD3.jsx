@@ -23,9 +23,9 @@ const circuitData = {
                 { type: "busbar", orientation: "vertical", x: 235, y: 334, length: -70, visible: true },
                 { type: "curve", x: 160, y: 314, length: 150, visible: true },
                 { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
+                { type: "halfcurve", x: 290, y: 430, length: 30, visible: true },
             ]
-        },
-        {
+        },{
             id: 2,
             elements: [
                 { type: "busbar", orientation: "horizontal", x: 180, y: 100, length: 60, visible: true },
@@ -83,16 +83,13 @@ const CircuitDiagramD3 = () => {
         };
 
         const drawBusbar = ({ orientation, x, y, length }, offsetX) => {
-            const line = svg.append('line')
+            svg.append('line')
                 .attr('x1', x + offsetX)
                 .attr('y1', y)
                 .attr('x2', orientation === "horizontal" ? x + length + offsetX : x + offsetX)
                 .attr('y2', orientation === "horizontal" ? y : y + length)
                 .attr('stroke', '#000')
-                .attr('stroke-width', 1.5)
-                .on('click', () => handleElementClick({ type: 'busbar', x: x + offsetX, y }));
-
-            line.raise(); // Bring line to front
+                .attr('stroke-width', 1.5);
         };
 
         const drawImage = (imgSrc, { x, y, length, orientation }, offsetX) => {
@@ -101,60 +98,37 @@ const CircuitDiagramD3 = () => {
                 .attr('x', x + offsetX)
                 .attr('y', y)
                 .attr('width', length)
-                .attr('height', length)
-                .on('click', () => handleElementClick({ type: imgSrc, x: x + offsetX, y }));
+                .attr('height', length);
 
             applyRotation(image, x + offsetX, y, length, orientation);
-            image.raise(); // Bring image to front
         };
 
         const drawHalfCurve = ({ x, y, length }, offsetX) => {
             const halfCurvePath = `M${x + offsetX},${y} Q${x + length / 2 + offsetX},${y - length} ${x + length + offsetX},${y}`;
-            const path = svg.append('path')
+            svg.append('path')
                 .attr('d', halfCurvePath)
                 .attr('stroke', '#000')
                 .attr('stroke-width', 2)
-                .attr('fill', 'none')
-                .on('click', () => handleElementClick({ type: 'halfcurve', x: x + offsetX, y }));
-
-            path.raise(); // Bring path to front
+                .attr('fill', 'none');
         };
 
         const drawCurve = ({ x, y, length }, offsetX) => {
-            const curveImage = svg.append('image')
+            svg.append('image')
                 .attr('href', curve)
                 .attr('x', x + offsetX)
                 .attr('y', y)
                 .attr('width', length)
-                .attr('height', length)
-                .on('click', () => handleElementClick({ type: 'curve', x: x + offsetX, y }));
-
-            curveImage.raise(); // Bring image to front
+                .attr('height', length);
         };
 
         const drawText = ({ x, y, content }, offsetX) => {
-            // Create a text element
-            const textElement = svg.append('text')
+            svg.append('text')
                 .attr('x', x + offsetX)
                 .attr('y', y)
                 .text(content)
                 .attr('font-size', '14px')
                 .attr('fill', '#000');
-
-            // Get the bounding box of the text
-            const bbox = textElement.node().getBBox();
-
-            // Create a rectangle behind the text for the border
-            svg.append('rect')
-                .attr('x', bbox.x - 2) // Adding some padding
-                .attr('y', bbox.y - 2) // Adding some padding
-                .attr('width', bbox.width + 4) // Adding some padding
-                .attr('height', bbox.height + 4) // Adding some padding
-                .attr('fill', 'none') // Make it transparent
-                .attr('stroke', '#000') // Border color
-                .attr('stroke-width', 1); // Border width
         };
-
 
         const applyRotation = (element, x, y, length, orientation = '') => {
             const centerX = x + length / 2;
@@ -169,98 +143,60 @@ const CircuitDiagramD3 = () => {
             }
         };
 
-        const handleElementClick = (element) => {
-            alert(`Clicked on: ${element.type} at (${element.x}, ${element.y})`);
-        };
-
         const drawStructures = () => {
-            const boxWidth = 155; // Width of the dotted box
-            const boxHeightRow1 = 130; // Height of the first row
-            const boxHeightRow2 = 190; // Height of the second row
+            const boxWidth = 155;
+            const boxHeightRow1 = 130;
+            const boxHeightRow2 = 190;
 
             circuitData.structures.forEach((structure, index) => {
-                const offsetX = index * (boxWidth); // Adjust the offset for each structure
-                // Draw the dotted box for each structure
-                DottedBox({ x: offsetX + 180, y: 50, width: boxWidth, row1Height: boxHeightRow1, row2Height: boxHeightRow2 });
+                const offsetX = index * (boxWidth);
+                const margin = 10;
+
+                // Draw the red box with margin
+                LineBox(svg, {
+                    x: offsetX + 180 - margin,
+                    y: 50 - margin,
+                    width: boxWidth + margin * 2,
+                    height: boxHeightRow1 + boxHeightRow2 + margin * 2,
+                });
+
+                // Draw the dotted box
+                DottedBox({
+                    x: offsetX + 180,
+                    y: 50,
+                    width: boxWidth,
+                    row1Height: boxHeightRow1,
+                    row2Height: boxHeightRow2
+                });
 
                 structure.elements.forEach((element) => drawElement(element, offsetX));
             });
         };
 
         const DottedBox = ({ x, y, width, row1Height, row2Height }) => {
-            // Draw the top row of the box
-            svg.append('line')
-                .attr('x1', x)
-                .attr('y1', y)
-                .attr('x2', x + width)
-                .attr('y2', y)
-                .attr('stroke', 'green')
-                .attr('stroke-width', 1.5)
-                .attr('stroke-dasharray', '5,5');
-
-            // Draw the left side of the box
-            svg.append('line')
-                .attr('x1', x)
-                .attr('y1', y)
-                .attr('x2', x)
-                .attr('y2', y + row1Height)
-                .attr('stroke', 'green')
-                .attr('stroke-width', 1.5)
-                .attr('stroke-dasharray', '5,5');
-
-            // Draw the right side of the box
-            svg.append('line')
-                .attr('x1', x + width)
-                .attr('y1', y)
-                .attr('x2', x + width)
-                .attr('y2', y + row1Height)
-                .attr('stroke', 'green')
-                .attr('stroke-width', 1.5)
-                .attr('stroke-dasharray', '5,5');
-
-            // Draw the middle line of the box
-            svg.append('line')
-                .attr('x1', x)
-                .attr('y1', y + row1Height)
-                .attr('x2', x + width)
-                .attr('y2', y + row1Height)
-                .attr('stroke', 'green')
-                .attr('stroke-width', 1.5)
-                .attr('stroke-dasharray', '5,5');
-
-            // Draw the bottom row of the box
-            svg.append('line')
-                .attr('x1', x)
-                .attr('y1', y + row1Height + row2Height)
-                .attr('x2', x + width)
-                .attr('y2', y + row1Height + row2Height)
-                .attr('stroke', 'green')
-                .attr('stroke-width', 1.5)
-                .attr('stroke-dasharray', '5,5');
-
-            // Draw the left side of the bottom row
-            svg.append('line')
-                .attr('x1', x)
-                .attr('y1', y + row1Height)
-                .attr('x2', x)
-                .attr('y2', y + row1Height + row2Height)
-                .attr('stroke', 'green')
-                .attr('stroke-width', 1.5)
-                .attr('stroke-dasharray', '5,5');
-
-            // Draw the right side of the bottom row
-            svg.append('line')
-                .attr('x1', x + width)
-                .attr('y1', y + row1Height)
-                .attr('x2', x + width)
-                .attr('y2', y + row1Height + row2Height)
+            svg.append('rect')
+                .attr('x', x)
+                .attr('y', y)
+                .attr('width', width)
+                .attr('height', row1Height + row2Height)
+                .attr('fill', 'none')
                 .attr('stroke', 'green')
                 .attr('stroke-width', 1.5)
                 .attr('stroke-dasharray', '5,5');
         };
 
+        const LineBox = (svg, { x, y, width, height }) => {
+            svg.append('rect')
+                .attr('x', x)
+                .attr('y', y)
+                .attr('width', width)
+                .attr('height', height)
+                .attr('fill', 'none')
+                .attr('stroke', 'red')
+                .attr('stroke-width', 2);
+        };
 
-        drawStructures(); // Call to draw structures
+        drawStructures();
     }, []);
 
     return <svg ref={svgRef} width="100%" height="600" />;
